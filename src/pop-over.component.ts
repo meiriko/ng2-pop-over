@@ -1,6 +1,5 @@
 import {
-    Component, OnInit, OnDestroy, Input, ViewChild, ElementRef, Renderer,
-    OnChanges, SimpleChanges, AfterViewInit
+    Component, OnInit, OnDestroy, Input, ViewChild, ElementRef, Renderer, AfterViewInit
 } from '@angular/core';
 import { Observable, Subject, Subscription, BehaviorSubject } from 'rxjs/Rx';
 @Component({
@@ -22,9 +21,11 @@ import { Observable, Subject, Subscription, BehaviorSubject } from 'rxjs/Rx';
         </div>
     </div>`
 })
-export class PopOverComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
-    showOnSubscription: Subscription;
-    hideOnSubscription: Subscription;
+export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
+    private showOnSubscription: Subscription;
+    private hideOnSubscription: Subscription;
+    private originalParent: Node;
+    private clickSubscription: Subscription;
     @Input('show-on')
     set showOn(value: Observable<MouseEvent>){
         this.showOnSubscription && this.showOnSubscription.unsubscribe();
@@ -43,8 +44,6 @@ export class PopOverComponent implements OnInit, OnDestroy, OnChanges, AfterView
     @Input('y-offset') yOffset: number = 0;
     @ViewChild('popOverContent') content: any;
     visible$: Subject<boolean> = new BehaviorSubject<boolean>(false);
-    private originalParent: Node;
-    private clickSubscription: Subscription;
 
     constructor(private elRef: ElementRef, private renderer: Renderer) {
     }
@@ -59,13 +58,8 @@ export class PopOverComponent implements OnInit, OnDestroy, OnChanges, AfterView
 
     ngAfterViewInit(): any {
         this.renderer.setElementStyle(this.content.nativeElement, 'opacity', '0');
+        this.renderer.setElementStyle(this.content.nativeElement, 'visibility', 'hidden');
         return undefined;
-    }
-
-    ngOnChanges(changes: SimpleChanges): any {
-        if(changes.hasOwnProperty('showOn')){
-        } else if(changes.hasOwnProperty('hideOn')){
-        }
     }
 
     private isPosition(parts: Array<string>, type: string): boolean {
@@ -101,7 +95,7 @@ export class PopOverComponent implements OnInit, OnDestroy, OnChanges, AfterView
         return [x, y];
     }
 
-    private computePosition(el: any, event: MouseEvent): Observable<Array<number>> {
+    private computePosition(el: any, event: MouseEvent): [number, number] {//Observable<Array<number>> {
         let baseX: number;
         let baseY: number;
 
@@ -112,22 +106,19 @@ export class PopOverComponent implements OnInit, OnDestroy, OnChanges, AfterView
             [baseX, baseY] = [event.clientX, event.clientY];
         }
 
-        return Observable.timer(0)
-            .map(() => {
-                let [offsetX, offsetY] = this.computeAtPosition(el,
-                    (this.my) || '', this.xOffset, this.yOffset);
-                let elPosition = el.getBoundingClientRect();
-                offsetX = offsetX - elPosition.left;
-                offsetY = offsetY - elPosition.top;
-                return [baseX - offsetX, baseY - offsetY];
-            });
+        let [offsetX, offsetY] = this.computeAtPosition(el,
+            (this.my) || '', this.xOffset, this.yOffset);
+        let elPosition = el.getBoundingClientRect();
+        offsetX = offsetX - elPosition.left;
+        offsetY = offsetY - elPosition.top;
+        return [baseX - offsetX, baseY - offsetY];
     }
 
     hide() {
-        let el = this.content.nativeElement;
-        this.renderer.setElementStyle(el, 'opacity', '0');
+        this.renderer.setElementStyle(this.content.nativeElement, 'opacity', '0');
+        this.renderer.setElementStyle(this.content.nativeElement, 'visibility', 'hidden');
         this.visible$.next(false);
-        this.originalParent && this.originalParent.appendChild(el);
+        this.originalParent && this.originalParent.appendChild(this.content.nativeElement);
     }
 
     show(event: MouseEvent) {
@@ -136,29 +127,23 @@ export class PopOverComponent implements OnInit, OnDestroy, OnChanges, AfterView
         let el = this.content.nativeElement;
         this.originalParent = el.parentNode;
         el.ownerDocument.body.appendChild(el);
-        this.computePosition(el, event)
-            .take(1)
-            .subscribe(([x, y]) => {
-                this.renderer.setElementStyle(el, 'top', y + 'px');
-                this.renderer.setElementStyle(el, 'left', x + 'px');
-                this.renderer.setElementStyle(el, 'opacity', '1');
-                if (!this.keepOnClickOutside) {
-                    this.clickSubscription = Observable.timer(0).first().subscribe(() =>
-                        this.clickSubscription = Observable.fromEvent(el.ownerDocument, 'click')
-                            .filter((md: MouseEvent) => !el.contains(md.target))
-                            .first()
-                            .subscribe((v) => (this.hide()))
-                    );
-                }
-            });
+        var [x, y] = this.computePosition(el, event);
+        this.renderer.setElementStyle(el, 'top', y + 'px');
+        this.renderer.setElementStyle(el, 'left', x + 'px');
+        this.renderer.setElementStyle(el, 'opacity', '1');
+        this.renderer.setElementStyle(this.content.nativeElement, 'visibility', 'inherit');
+        if (!this.keepOnClickOutside) {
+            this.clickSubscription = Observable.fromEvent(el.ownerDocument, 'click')
+                .skipUntil(Observable.timer(0))
+                .filter((md: MouseEvent) => !el.contains(md.target))
+                .take(1)
+                .subscribe((v) => (this.hide()))
+        }
     }
 
     toggle(event: MouseEvent) {
         this.visible$
-            .first()
-            .filter((visible: boolean): boolean => !visible)
-            .subscribe(() => {
-                this.show(event);
-            });
+            .take(1)
+            .subscribe((visible: boolean) => (visible ? this.hide() : this.show(event)));
     }
 }
