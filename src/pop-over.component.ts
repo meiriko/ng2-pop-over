@@ -7,15 +7,12 @@ import { Observable, Subject, Subscription, BehaviorSubject } from 'rxjs/Rx';
     styles: [
         `.pop-over-content {
             position: absolute;
-            -webkit-box-shadow: 0 0 5px black;
-            -moz-box-shadow: 0 0 5px black;
-            box-shadow: 0 0 5px black;
             transition: opacity 0.2s ease-in-out;
             background: #FFFFFF;
         }`
     ],
     template: `<div class="pop-over">
-        <div #popOverContent class="pop-over-content"
+        <div #popOverContent class="pop-over-content" [ngClass]="contentClass"
              [class.shown]="visible$ | async">
             <ng-content *ngIf="visible$ | async"></ng-content>
         </div>
@@ -42,6 +39,7 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() at: string;
     @Input('x-offset') xOffset: number = 0;
     @Input('y-offset') yOffset: number = 0;
+    @Input('content-class') contentClass: string;
     @ViewChild('popOverContent') content: any;
     visible$: Subject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -127,18 +125,20 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
         let el = this.content.nativeElement;
         this.originalParent = el.parentNode;
         el.ownerDocument.body.appendChild(el);
-        var [x, y] = this.computePosition(el, event);
-        this.renderer.setElementStyle(el, 'top', y + 'px');
-        this.renderer.setElementStyle(el, 'left', x + 'px');
-        this.renderer.setElementStyle(el, 'opacity', '1');
         this.renderer.setElementStyle(this.content.nativeElement, 'visibility', 'inherit');
-        if (!this.keepOnClickOutside) {
-            this.clickSubscription = Observable.fromEvent(el.ownerDocument, 'click')
-                .skipUntil(Observable.timer(0))
-                .filter((md: MouseEvent) => !el.contains(md.target))
-                .take(1)
-                .subscribe((v) => (this.hide()))
-        }
+        Observable.timer(0).take(1).subscribe(() => {
+            var [x, y] = this.computePosition(el, event);
+            this.renderer.setElementStyle(el, 'top', y + 'px');
+            this.renderer.setElementStyle(el, 'left', x + 'px');
+            this.renderer.setElementStyle(el, 'opacity', '1');
+            if (!this.keepOnClickOutside) {
+                this.clickSubscription = Observable.fromEvent(el.ownerDocument, 'click')
+                    .skipUntil(Observable.timer(0))
+                    .filter((md: MouseEvent) => !el.contains(md.target))
+                    .take(1)
+                    .subscribe((v) => (this.hide()))
+            }
+        })
     }
 
     toggle(event: MouseEvent) {
