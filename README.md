@@ -13,7 +13,7 @@ This component can be used as:
 See DEMO with code samples.
  
 * The component contains minimal styling to reduce dependency on external code and allow maximal flexibility to the user.
-* The pop over can be triggered programatically or by using a pop-over-trigger directive.
+* The pop over can be triggered programmatically or by using a pop-over-trigger directive.
 * The position can be set to be relative to the triggering mouse event, the triggering element or a dom element.
 
  ## Installation
@@ -69,14 +69,14 @@ See DEMO with code samples.
  ## Show or hide your pop over
  
  The pop over's visibility can be controlled in 3 ways:
-  * Programatically, using the components `show/hide` functions.
+  * Programmatically, using the component's `show/hide` functions.
   * By setting the components `show-on/hide-on` properties.
   * By using the auxiliary `pop-over-trigger` directive.
 
   By default the pop over is closed when the user clicks anywhere outside the pop over.
   To change this behavior, you can set `[keep-on-click-outside]="true"`.
   
-  ### Programatically showing/hiding a pop over
+  ### Programmatically showing/hiding a pop over
   Create your pop over and assign it to a variable (using the `#varName` syntax):
    
   `<pop-over #helpPO>... content </pop-over>`
@@ -95,7 +95,7 @@ See DEMO with code samples.
    
    `<span (click)='helpPO.toggle($event)'>?</span>`
    
-   ### The show-on/hide properties
+   ### The `show-on/hide-on` properties
    The pop over has two input properties `show-on/hide-on` which are `Observable<MouseEvent>`.
    If you set these properties you can show/hide to pop over when the sequence emits a new value.
    These properties are independent and you can use only one of them.
@@ -146,7 +146,7 @@ See DEMO with code samples.
  
  ###The attachment type
  The attachment type is inspired by the great [qtip2 library](http://qtip2.com/). It instructs the pop over
- how to position it self relative to the anchor base. It is composed of 2 parts:
+ how to position itself relative to the anchor base. It is composed of 2 parts:
  * `[my]` - relates to the pop over's dimension.
  * `[at]` - relates to the anchor (if it is an element and not a mouse event) dimensions.
   
@@ -165,7 +165,7 @@ See DEMO with code samples.
  
  ## Styling
  
- The PopOverComponent provides only 2 very basic styling:
+ The PopOverComponent provides only 3 very basic styling:
  * Defines position to be absolute. Do not change this!
  * Defines the background to be #FFFFFF (white).
  * Defines a transition on the opacity for showing/hiding the pop over.
@@ -238,18 +238,23 @@ See DEMO with code samples.
     .... content goes here ....
 </pop-over>
 ```
-* `[show-on]` an observable of mouse events that triggers the appearance of the pop over. Default is *none*;
-* `[hide-on]` an observable of mouse events that hides the pop over. Default is *none*;
+* `[show-on]` an observable of mouse events that triggers the appearance of the pop over. Default is **none**;
+* `[hide-on]` an observable of mouse events that hides the pop over. Default is **none**;
 * `[anchor-to]` a boolean(yes/no) or a node to anchor the pop over to. If set to false, attaches to the mouse event itself,
-if set to true, attaches to the triggering element. If it is a dom element, attaches to the element. Default is *false*;
+if set to true, attaches to the triggering element. If it is a dom element, attaches to the element. Default is **false**;
 * `[my]` a string to describe the attachment point of the pop over, a combination of left|center|right and top|middle|bottom.
-Defaults is *center middle*.
+Defaults is **center middle**.
 * `[at]` a string to describe the attachment point to the anchor (in case it is not the mouse event), a combination of left|center|right and top|middle|bottom.
-Defaults is *center middle*.
-* `[x-offset]` the number of pixels to horizontally offset the pop over after doing all layout calculations. Default is *0*
-* `[y-offset]` the number of pixels to vertically offset the pop over after doing all layout calculations. Default is *0*
-* `[content-class]` and extra class name to decorate the pop-over element to make it possible to modify it by a specific css rule. Default *''* (empty).
-* `keep-on-click-outside` a boolean to specify if we want to keep the pop over open even if the user clicked outside.
+Defaults is **center middle**.
+* `[x-offset]` the number of pixels to horizontally offset the pop over after doing all layout calculations. Default is **0**
+* `[y-offset]` the number of pixels to vertically offset the pop over after doing all layout calculations. Default is **0**
+* `[content-class]` and extra class name to decorate the pop-over element to make it possible to modify it by a specific css rule. Default **''** (empty).
+* `keep-on-click-outside` a boolean to specify if we want to keep the pop over open even if the user clicked outside. Default is **false**.
+
+####API
+* `show(event: MouseEvent)` show the pop over.
+* `hide()` hide the pop over.
+* `toggle(event: MouseEvent)` toggle the pop over state.
 
 ###PopOverTrigger
 ```
@@ -258,6 +263,6 @@ Defaults is *center middle*.
     [hide-on]="comma_separated_event_types">
 </any>
 ```
-* `[pop-over-trigger]` a reference to a previously defined pop over. Default: *''* (empty);
-* `[show-on]` a comma separated list of event types to show the target pop over on. Example: 'click,mouseenter'. Default: *''* (empty);
-* `[hide-on]` a comma separated list of event types to hide the target pop over on. Example: 'click,mouseenter'. Default: *''* (empty);
+* `[pop-over-trigger]` a reference to a previously defined pop over. Default: **''** (empty);
+* `[show-on]` a comma separated list of event types to show the target pop over on. Example: 'click,mouseenter'. Default: **''** (empty);
+* `[hide-on]` a comma separated list of event types to hide the target pop over on. Example: 'click,mouseenter'. Default: **''** (empty);
