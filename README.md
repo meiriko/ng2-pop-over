@@ -2,7 +2,7 @@
 
 Simple pop over component for angular2 final release.
  The component enables quick insertion of pop over elements.
- This library also contains a pop-over-trigger directive that turns dom element into a trigger to show or hide a pop-over.
+ This library also contains a pop-over-trigger directive that turns a dom element into a trigger to show or hide a pop-over.
 
 This component can be used as:
 * A tooltip.
@@ -250,3 +250,14 @@ Defaults is *center middle*.
 * `[y-offset]` the number of pixels to vertically offset the pop over after doing all layout calculations. Default is *0*
 * `[content-class]` and extra class name to decorate the pop-over element to make it possible to modify it by a specific css rule. Default *''* (empty).
 * `keep-on-click-outside` a boolean to specify if we want to keep the pop over open even if the user clicked outside.
+
+###PopOverTrigger
+```
+<any [pop-over-trigger]="popOverRef"
+    [show-on]="comma_separated_event_types"
+    [hide-on]="comma_separated_event_types">
+</any>
+```
+* `[pop-over-trigger]` a reference to a previously defined pop over. Default: *''* (empty);
+* `[show-on]` a comma separated list of event types to show the target pop over on. Example: 'click,mouseenter'. Default: *''* (empty);
+* `[hide-on]` a comma separated list of event types to hide the target pop over on. Example: 'click,mouseenter'. Default: *''* (empty);
