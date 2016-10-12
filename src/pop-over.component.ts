@@ -33,7 +33,7 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
         this.hideOnSubscription && this.hideOnSubscription.unsubscribe();
         value && (this.hideOnSubscription = value.subscribe(this.hide.bind(this)));
     };
-    @Input('keep-on-click-outsize') keepOnClickOutside: boolean;
+    @Input('keep-on-click-outside') keepOnClickOutside: boolean;
     @Input('anchor-to') anchorTo: boolean|Node = false;
     @Input() my: string;
     @Input() at: string;

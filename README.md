@@ -72,7 +72,10 @@ See DEMO with code samples.
   * Programatically, using the components `show/hide` functions.
   * By setting the components `show-on/hide-on` properties.
   * By using the auxiliary `pop-over-trigger` directive.
-   
+
+  By default the pop over is closed when the user clicks anywhere outside the pop over.
+  To change this behavior, you can set `[keep-on-click-outside]="true"`.
+  
   ### Programatically showing/hiding a pop over
   Create your pop over and assign it to a variable (using the `#varName` syntax):
    
@@ -218,3 +221,32 @@ See DEMO with code samples.
   ```
   (do not forget the !important)
   
+##Full options documentation
+
+###PopOverComponent
+```
+<pop-over
+    [show-on]="observableOfMouseEvent"
+    [hide-on]="observableOfMouseEvent"
+    [anchor-to]="true|false|nodeReference"
+    [my]="left|right|center top|middle|bottom"
+    [at]="left|right|center top|middle|bottom"
+    [x-offset]="number"
+    [y-offset]="number"
+    [content-class]="class-name-string"
+    [keep-on-click-outside]="boolean">
+    .... content goes here ....
+</pop-over>
+```
+* `[show-on]` an observable of mouse events that triggers the appearance of the pop over. Default is *none*;
+* `[hide-on]` an observable of mouse events that hides the pop over. Default is *none*;
+* `[anchor-to]` a boolean(yes/no) or a node to anchor the pop over to. If set to false, attaches to the mouse event itself,
+if set to true, attaches to the triggering element. If it is a dom element, attaches to the element. Default is *false*;
+* `[my]` a string to describe the attachment point of the pop over, a combination of left|center|right and top|middle|bottom.
+Defaults is *center middle*.
+* `[at]` a string to describe the attachment point to the anchor (in case it is not the mouse event), a combination of left|center|right and top|middle|bottom.
+Defaults is *center middle*.
+* `[x-offset]` the number of pixels to horizontally offset the pop over after doing all layout calculations. Default is *0*
+* `[y-offset]` the number of pixels to vertically offset the pop over after doing all layout calculations. Default is *0*
+* `[content-class]` and extra class name to decorate the pop-over element to make it possible to modify it by a specific css rule. Default *''* (empty).
+* `keep-on-click-outside` a boolean to specify if we want to keep the pop over open even if the user clicked outside.
