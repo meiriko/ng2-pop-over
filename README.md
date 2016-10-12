@@ -10,7 +10,7 @@ This component can be used as:
 * To show more details on hover.
 * As a lightbox.
 
-See DEMO with code samples.
+See [DEMO](https://meiriko.github.io/ng2-pop-over-demo/) with code samples.
  
 * The component contains minimal styling to reduce dependency on external code and allow maximal flexibility to the user.
 * The pop over can be triggered programmatically or by using a pop-over-trigger directive.
