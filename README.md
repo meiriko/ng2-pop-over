@@ -266,3 +266,5 @@ Defaults is **center middle**.
 * `[pop-over-trigger]` a reference to a previously defined pop over. Default: **''** (empty);
 * `[show-on]` a comma separated list of event types to show the target pop over on. Example: 'click,mouseenter'. Default: **''** (empty);
 * `[hide-on]` a comma separated list of event types to hide the target pop over on. Example: 'click,mouseenter'. Default: **''** (empty);
+
+[![Analytics](https://ga-beacon.appspot.com/UA-85622683-2/github/readme)](https://github.com/igrigorik/ga-beacon)
