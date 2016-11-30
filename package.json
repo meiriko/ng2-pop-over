@@ -1,6 +1,6 @@
 {
   "name": "ng2-pop-over",
-  "version": "0.9.32",
+  "version": "0.9.33",
   "description": "simple pop over component for angular2 (final release)",
   "main": "index.js",
   "scripts": {

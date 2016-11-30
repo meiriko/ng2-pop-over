@@ -110,11 +110,16 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
             (this.my) || '', this.xOffset, this.yOffset);
         let elPosition = el.getBoundingClientRect();
         let pagePosition = el.ownerDocument.body.getBoundingClientRect();
+        let documentElement = el.ownerDocument.documentElement;
         offsetX = offsetX - elPosition.left + pagePosition.left;
         offsetY = offsetY - elPosition.top + pagePosition.top;
         return [
-            Math.max(boundryMargin, Math.min(baseX - offsetX, bodyPosition.right - elPosition.width - boundryMargin)),
-            Math.max(boundryMargin, Math.min(baseY - offsetY, bodyPosition.bottom - elPosition.height - boundryMargin))
+            Math.max(boundryMargin - bodyPosition.left, Math.min(
+                baseX - offsetX,
+                documentElement.clientWidth - bodyPosition.left - elPosition.width - boundryMargin)),
+            Math.max(boundryMargin - bodyPosition.top, Math.min(
+                baseY - offsetY,
+                documentElement.clientHeight - bodyPosition.top - elPosition.height - boundryMargin))
         ];
     }
 
