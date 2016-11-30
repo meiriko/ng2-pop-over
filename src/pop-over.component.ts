@@ -93,9 +93,11 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
         return [x, y];
     }
 
-    private computePosition(el: any, event: MouseEvent): [number, number] {//Observable<Array<number>> {
+    private computePosition(el: any, event: MouseEvent): [number, number] {
         let baseX: number;
         let baseY: number;
+        let boundryMargin: number = 5;
+        let bodyPosition = el.ownerDocument.body.getClientRects()[0];
 
         if (this.anchorTo) {
             let target: any = (this.anchorTo instanceof Node ? this.anchorTo: event.target);
@@ -110,7 +112,10 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
         let pagePosition = el.ownerDocument.body.getBoundingClientRect();
         offsetX = offsetX - elPosition.left + pagePosition.left;
         offsetY = offsetY - elPosition.top + pagePosition.top;
-        return [baseX - offsetX, baseY - offsetY];
+        return [
+            Math.max(boundryMargin, Math.min(baseX - offsetX, bodyPosition.right - elPosition.width - boundryMargin)),
+            Math.max(boundryMargin, Math.min(baseY - offsetY, bodyPosition.bottom - elPosition.height - boundryMargin))
+        ];
     }
 
     hide() {
