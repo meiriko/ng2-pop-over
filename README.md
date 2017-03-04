@@ -1,5 +1,7 @@
 # ng2-pop-over
 
+**Finally! Version 0.9.35 solved NgModule compilation error and should work with latest ng2 compiler.**
+
 Simple pop over component for angular2 final release.
  The component enables quick insertion of pop over elements.
  This library also contains a pop-over-trigger directive that turns a dom element into a trigger to show or hide a pop-over.
