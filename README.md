@@ -1,6 +1,6 @@
 # ng2-pop-over
 
-**Finally! Version 0.9.35 solved NgModule compilation error and should work with latest ng2 compiler.**
+**Finally! Version 0.9.36 solved NgModule compilation error and should work with latest ng2 compiler.**
 
 Simple pop over component for angular2 final release.
  The component enables quick insertion of pop over elements.
