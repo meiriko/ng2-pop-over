@@ -1,6 +1,6 @@
 {
 	"name": "ng2-pop-over",
-	"version": "0.9.36",
+	"version": "0.9.37",
 	"description": "simple pop over component for angular2 (final release)",
 	"main": "bundles/npm-module-seed.umd.min.js",
 	"module": "index.js",
