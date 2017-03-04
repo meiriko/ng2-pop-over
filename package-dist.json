@@ -1,0 +1,32 @@
+{
+	"name": "ng2-pop-over",
+	"version": "0.9.35",
+	"description": "simple pop over component for angular2 (final release)",
+	"main": "bundles/npm-module-seed.umd.min.js",
+	"module": "index.js",
+	"typings": "index.d.ts",
+	"keywords": [
+	    "ng2",
+	    "angualr2",
+	    "popover"
+	],
+	"author": {
+		"name": "Meir Shahar (http://www.linkedin.com/in/meirs)",
+		"email": "meir.shahar@gmail.com"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/meiriko/ng2-pop-over.git"
+	},
+	"homepage": "https://github.com/meiriko/ng2-pop-over#readme",
+	"bugs": {
+		"url": "https://github.com/meiriko/ng2-pop-over/issues"
+	},
+	"peerDependencies": {
+		"@angular/core": "^2.4.0",
+		"reflect-metadata": "^0.1.8",
+		"rxjs": "^5.0.1",
+		"zone.js": "^0.7.2"
+	}
+}

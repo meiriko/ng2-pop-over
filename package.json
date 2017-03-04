@@ -1,54 +1,45 @@
 {
   "name": "ng2-pop-over",
-  "version": "0.9.34",
+  "version": "0.9.35",
   "description": "simple pop over component for angular2 (final release)",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "ngc -p ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/meiriko/ng2-pop-over.git"
-  },
   "keywords": [
     "ng2",
     "angualr2",
     "popover"
   ],
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf .tmp && rimraf dist",
+    "transpile": "ngc",
+    "package": "rollup -c",
+    "minify": "./node_modules/uglify-js/bin/uglifyjs dist/bundles/npm-module-seed.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/npm-module-seed.umd.min.js",
+    "copy": "cpx './package-dist.json' dist && renamer --find 'package-dist.json' --replace 'package.json' ./dist/*",
+    "build": "npm run clean && npm run transpile && npm run package && npm run minify && npm run copy"
+  },
   "author": "Meir <meir.shahar@gmail.com> (https://www.linkedin.com/in/meirs)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/meiriko/ng2-pop-over/issues"
   },
   "homepage": "https://github.com/meiriko/ng2-pop-over#readme",
-  "devDependencies": {
-    "@angular/common": "2.0.0",
-    "@angular/compiler": "2.0.0",
-    "@angular/core": "2.0.0",
-    "@angular/platform-browser": "2.0.0",
-    "@angular/platform-browser-dynamic": "2.0.0",
-    "@types/core-js": "^0.9.35",
-    "del": "^2.2.1",
-    "es6-promise": "^3.2.1",
-    "es6-shim": "^0.35.1",
-    "gulp": "^3.9.1",
-    "gulp-mocha": "^3.0.0",
-    "gulp-replace": "^0.5.4",
-    "gulp-shell": "^0.5.1",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-tslint": "^4.3.1",
-    "gulp-typescript": "^2.13.6",
-    "gulpclass": "^0.1.1",
-    "reflect-metadata": "^0.1.8",
-    "rxjs": "^5.0.0-beta.12",
-    "tslint": "^3.14.0",
-    "tslint-stylish": "^2.1.0-beta",
-    "typescript": "^2.0.3",
-    "zone.js": "^0.6.25"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meiriko/ng2-pop-over.git"
   },
-  "peerDependencies": {
-    "@angular/core": "^2.0.0",
-    "rxjs": "^5.0.0-beta.12"
+  "devDependencies": {
+    "@angular/compiler": "^2.4.4",
+    "@angular/compiler-cli": "^2.4.4",
+    "cpx": "^1.5.0",
+    "renamer": "^0.6.1",
+    "rimraf": "^2.5.4",
+    "rollup": "^0.41.4",
+    "typescript": "~2.0.0",
+    "uglify-js": "^2.7.5"
+  },
+  "dependencies": {
+    "@angular/common": "^2.4.4",
+    "@angular/core": "^2.4.4",
+    "rxjs": "^5.0.3",
+    "zone.js": "^0.7.6"
   }
 }
