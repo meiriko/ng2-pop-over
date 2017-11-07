@@ -9,6 +9,7 @@ import { Observable, Subject, Subscription, BehaviorSubject } from 'rxjs/Rx';
             position: absolute;
             transition: opacity 0.2s ease-in-out;
             background: #FFFFFF;
+            z-index: 1060;
         }`
     ],
     template: `<div class="pop-over">
@@ -41,7 +42,7 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input('y-offset') yOffset: number = 0;
     @Input('content-class') contentClass: string;
     @ViewChild('popOverContent') content: any;
-    visible$: Subject<boolean> = new BehaviorSubject<boolean>(false);
+    visible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor(private elRef: ElementRef, private renderer: Renderer) {
     }
