@@ -1,7 +1,6 @@
-import {
-    Component, OnInit, OnDestroy, Input, ViewChild, ElementRef, Renderer, AfterViewInit
-} from '@angular/core';
-import { Observable, Subject, Subscription, BehaviorSubject } from 'rxjs/Rx';
+import { Component, OnDestroy, Input, ViewChild, AfterViewInit, Renderer2 } from '@angular/core';
+import { Observable, Subscription, BehaviorSubject } from 'rxjs/Rx';
+
 @Component({
     selector: 'pop-over',
     styles: [
@@ -19,16 +18,18 @@ import { Observable, Subject, Subscription, BehaviorSubject } from 'rxjs/Rx';
         </div>
     </div>`
 })
-export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PopOverComponent implements OnDestroy, AfterViewInit {
     private showOnSubscription: Subscription;
     private hideOnSubscription: Subscription;
     private originalParent: Node;
     private clickSubscription: Subscription;
+
     @Input('show-on')
     set showOn(value: Observable<MouseEvent>){
         this.showOnSubscription && this.showOnSubscription.unsubscribe();
         value && (this.showOnSubscription = value.subscribe(this.show.bind(this)));
     };
+
     @Input('hide-on')
     set hideOn(value: Observable<MouseEvent>){
         this.hideOnSubscription && this.hideOnSubscription.unsubscribe();
@@ -42,13 +43,10 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input('y-offset') yOffset: number = 0;
     @Input('content-class') contentClass: string;
     @ViewChild('popOverContent') content: any;
+
     visible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    constructor(private elRef: ElementRef, private renderer: Renderer) {
-    }
-
-    ngOnInit() {
-    }
+    constructor(private renderer: Renderer2) { }
 
     ngOnDestroy() {
         this.hideOnSubscription && this.hideOnSubscription.unsubscribe();
@@ -56,8 +54,8 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit(): any {
-        this.renderer.setElementStyle(this.content.nativeElement, 'opacity', '0');
-        this.renderer.setElementStyle(this.content.nativeElement, 'visibility', 'hidden');
+        this.renderer.setStyle(this.content.nativeElement, 'opacity', '0');
+        this.renderer.setStyle(this.content.nativeElement, 'visibility', 'hidden');
         return undefined;
     }
 
@@ -125,8 +123,8 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     hide() {
-        this.renderer.setElementStyle(this.content.nativeElement, 'opacity', '0');
-        this.renderer.setElementStyle(this.content.nativeElement, 'visibility', 'hidden');
+        this.renderer.setStyle(this.content.nativeElement, 'opacity', '0');
+        this.renderer.setStyle(this.content.nativeElement, 'visibility', 'hidden');
         this.visible$.next(false);
         this.originalParent && this.originalParent.appendChild(this.content.nativeElement);
     }
@@ -137,12 +135,12 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
         let el = this.content.nativeElement;
         this.originalParent = el.parentNode;
         el.ownerDocument.body.appendChild(el);
-        this.renderer.setElementStyle(this.content.nativeElement, 'visibility', 'inherit');
+        this.renderer.setStyle(this.content.nativeElement, 'visibility', 'inherit');
         Observable.timer(0).take(1).subscribe(() => {
             var [x, y] = this.computePosition(el, event);
-            this.renderer.setElementStyle(el, 'top', y + 'px');
-            this.renderer.setElementStyle(el, 'left', x + 'px');
-            this.renderer.setElementStyle(el, 'opacity', '1');
+            this.renderer.setStyle(el, 'top', y + 'px');
+            this.renderer.setStyle(el, 'left', x + 'px');
+            this.renderer.setStyle(el, 'opacity', '1');
             if (!this.keepOnClickOutside) {
                 this.clickSubscription = Observable.fromEvent(el.ownerDocument, 'click')
                     .skipUntil(Observable.timer(0))
@@ -150,7 +148,7 @@ export class PopOverComponent implements OnInit, OnDestroy, AfterViewInit {
                     .take(1)
                     .subscribe((v) => (this.hide()))
             }
-        })
+        });
     }
 
     toggle(event: MouseEvent) {
