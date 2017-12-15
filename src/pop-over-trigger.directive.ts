@@ -1,4 +1,4 @@
-import { Directive, Input, OnInit, OnChanges, SimpleChanges, ElementRef, Renderer } from '@angular/core';
+import { Directive, Input, OnInit, OnChanges, SimpleChanges, ElementRef, Renderer2 } from '@angular/core';
 import { PopOverComponent } from "./pop-over.component";
 import { Observable } from "rxjs";
 
@@ -10,7 +10,7 @@ export class PopOverTrigger implements OnInit, OnChanges {
     @Input('show-on') showOn: string;
     @Input('hide-on') hideOn: string;
 
-    constructor(private elRef: ElementRef, private renderer: Renderer) {
+    constructor(private elRef: ElementRef, private renderer: Renderer2) {
     }
 
     ngOnInit(): void {

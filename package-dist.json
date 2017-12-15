@@ -1,6 +1,6 @@
 {
 	"name": "ng2-pop-over",
-	"version": "1.0.1",
+	"version": "2.0.0",
 	"description": "Continuation of this package: https://github.com/meiriko/ng2-pop-over. A simple pop-over for Angular updated to the latest version.",
 	"main": "bundles/npm-module-seed.umd.min.js",
 	"module": "index.js",
@@ -9,8 +9,6 @@
 	    "ng",
 	    "ngx",
 	    "angular",
-	    "angular2",
-	    "angular4",
 	    "popover",
 	    "pop-over"
 	],
