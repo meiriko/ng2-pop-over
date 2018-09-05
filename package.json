@@ -1,54 +1,34 @@
 {
-  "name": "ng2-pop-over",
-  "version": "0.9.37",
-  "description": "simple pop over component for angular2 (final release)",
-  "keywords": [
-    "ng2",
-    "angualr2",
-    "popover"
-  ],
-  "main": "index.js",
-  "scripts": {
-    "clean": "rimraf .tmp && rimraf dist",
-    "transpile": "ngc",
-    "package": "rollup -c",
-    "minify": "./node_modules/uglify-js/bin/uglifyjs dist/bundles/npm-module-seed.umd.js --screw-ie8 --compress --mangle --comments --output dist/bundles/npm-module-seed.umd.min.js",
-    "copy": "cpx './package-dist.json' dist && renamer --find 'package-dist.json' --replace 'package.json' ./dist/*",
-    "build": "npm run clean && npm run transpile && npm run package && npm run minify && npm run copy"
-  },
-  "author": "Meir <meir.shahar@gmail.com> (https://www.linkedin.com/in/meirs)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/meiriko/ng2-pop-over/issues"
-  },
-  "homepage": "https://github.com/meiriko/ng2-pop-over#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/meiriko/ng2-pop-over.git"
-  },
-  "devDependencies": {
-    "@angular/compiler": "^2.4.4",
-    "@angular/compiler-cli": "^2.4.4",
-    "cpx": "^1.5.0",
-    "del": "^3.0.0",
-    "gulp": "^3.9.1",
-    "gulp-replace": "^0.6.1",
-    "gulp-shell": "^0.6.3",
-    "gulp-tslint": "^8.1.1",
-    "gulp-typescript": "^3.2.1",
-    "gulpclass": "^0.1.2",
-    "renamer": "^0.6.1",
-    "rimraf": "^2.5.4",
-    "rollup": "^0.41.4",
-    "tslint": "^5.5.0",
-    "tslint-stylish": "^2.1.0",
-    "typescript": "~2.0.0",
-    "uglify-js": "^2.7.5"
-  },
-  "dependencies": {
-    "@angular/common": "^2.4.4",
-    "@angular/core": "^2.4.4",
-    "rxjs": "^5.0.3",
-    "zone.js": "^0.7.6"
-  }
+	"name": "ng2-pop-over",
+	"version": "2.0.0",
+	"description": "Continuation of this package: https://github.com/meiriko/ng2-pop-over. A simple pop-over for Angular updated to the latest version.",
+	"main": "bundles/npm-module-seed.umd.min.js",
+	"module": "index.js",
+	"typings": "index.d.ts",
+	"keywords": [
+	    "ng",
+	    "ngx",
+	    "angular",
+	    "popover",
+	    "pop-over"
+	],
+	"author": {
+		"name": "Meir Shahar (http://www.linkedin.com/in/meirs)",
+		"email": "meir.shahar@gmail.com"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/meiriko/ng2-pop-over.git"
+	},
+	"homepage": "https://github.com/meiriko/ng2-pop-over#readme",
+	"bugs": {
+		"url": "https://github.com/meiriko/ng2-pop-over/issues"
+	},
+	"peerDependencies": {
+		"@angular/core": "^5.0.0",
+		"reflect-metadata": "^0.1.8",
+		"rxjs": "^5.0.1",
+		"zone.js": "^0.8.18"
+	}
 }
